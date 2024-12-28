@@ -22,13 +22,14 @@ export async function PUT(
     {params} : { params: { id: string } }
 ) {
     try {
-    const { title, content } = await request.json()
+    const { title, content, category } = await request.json()
     const { id } = await params
     const updatePost = await prisma.post.update({
         where: {id: Number(id)},
         data: {
             title,
-            content
+            content,
+            category,
         }
     })
 

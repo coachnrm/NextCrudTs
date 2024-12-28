@@ -5,18 +5,24 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 const Create = () => {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const [title, setTitle] = useState<string>('')
+  const [content, setContent] = useState<string>('')
+  const [category, setCategory] = useState<string>('')
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     try {
-      await axios.post('/api/posts', { title, content })
+      await axios.post('/api/posts', { 
+        title, 
+        content,
+        category
+       })
       router.push('/')
     } catch (error) {
       console.error(error)
+      alert('something went wrong')
     }
   }
 
@@ -58,6 +64,14 @@ const Create = () => {
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           ></textarea>
         </div>
+        <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">Select a category</option>
+              <option value="Tech">Tech</option>
+              <option value="Lifestyle">Lifestyle</option>
+          </select>
         <div>
           <button
             type="submit"
